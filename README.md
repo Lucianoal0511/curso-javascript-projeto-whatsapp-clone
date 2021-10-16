@@ -34,4 +34,4 @@ Sequência
 6 - Criação da pasta Format.js, dentro de util;
 7 - Inclui a chamada dos arquivos criados no index.html;
 8 - Deve-se prestar atenção na sequência da chamada de cada um para não dá erro;
-9 -
+9 - Agora iniciaremos o prototype para otimizar o código e diminuir a quantidade de códigos do projeto;
