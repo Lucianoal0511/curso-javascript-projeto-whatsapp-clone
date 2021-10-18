@@ -269,6 +269,84 @@ class WhatsAppController {
             this.closeRecordMicrophone();
 
         });
+
+        //método para quebrar linha na caixa de texto
+        this.el.inputText.on('keypress', e => {//Aqui a tecla está sendo pressionada
+
+            if (e.key === 'Enter' && !e.ctrlKey){//Se pressiona o Enter mas não pressiona o Ctrl junto
+
+                e.preventDefault();//cancela o comportamento padrão do Enter
+                this.el.btnSend.click();//envia a mensagem
+
+            }
+        })
+
+        this.el.inputText.on('keyup', e => {//Aqui a tecla já foi pressionada
+
+            if (this.el.inputText.innerHTML.length){//Se tiver alguma coisa escrita no inputText desaparece o inputPlaceholder
+                this.el.inputPlaceholder.hide();
+                this.el.btnSendMicrophone.hide();//Esconde o microfone
+                this.el.btnSend.show();//mostra a seta de send
+            } else {//se estiver vazio ele mostra
+                this.el.inputPlaceholder.show();
+                this.el.btnSendMicrophone.show();//mostra o microfone
+                this.el.btnSend.hide();//esconde a seta de send
+            }
+
+        });
+
+        this.el.btnSend.on('click', e => {//Ativar a seta para enviar o que está escrito na caixa de mensagem
+
+            console.log(this.el.inputText.innerHTML);
+
+        });
+
+        this.el.btnEmojis.on('click', e => {
+
+            this.el.panelEmojis.toggleClass('open');//abre o painel de emojis
+
+        });
+
+        this.el.panelEmojis.querySelectorAll('.emojik').forEach(emoji => {
+
+            emoji.on('click', e => {//Evento para pegar cada emoji
+
+                console.log(emoji.dataset.unicode);//joga no console o desenho do emoji
+                let img = this.el.imgEmojiDefault.cloneNode();//método nativo cloneNode()
+                //propriedades do emoji
+                img.style.cssText = emoji.style.cssText;
+                img.dataset.unicode = emoji.dataset.unicode;
+                img.alt = emoji.dataset.unicode;
+
+                //listar todos os emojis
+                emoji.classList.forEach(name => {
+                    img.classList.add(name);
+                });
+
+                // this.el.inputText.appendChild(img);//Aqui vai colocar o emoji na caixa de mensagem
+
+                //Nova forma de inserção na caixa de texto
+                let cursor = window.getSelection();//identificar o cursor
+                if (!cursor.focusNode || !cursor.focusNode.id == 'input-text') {//Verifica se não está focado em algum lugar
+                    this.el.inputText.focus();//Então foque no inputText
+                    cursor = window.getSelection();
+                }
+
+                let range = document.createRange();//Criando o controle dos intervalos
+                range = cursor.getRangeAt(0);//início da seleção
+                range.deleteContents();//apaga os conteúdos da seleção
+
+                let frag = document.createDocumentFragment();//Cria um fragmento do texto
+                frag.appendChild(img);//Insere a imagem
+                range.insertNode(frag);//Insere o fragmento novo
+                range.setStartAfter(img);//Joga o cursor para o fim do texto após a inserção
+
+                //precisamos forçar a retirada do placehold quando fomos colocar o emoji
+                this.el.inputText.dispatchEvent(new Event('keyup'));
+
+            });
+
+        });
         
     }
 
