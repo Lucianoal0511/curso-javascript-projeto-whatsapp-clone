@@ -209,14 +209,39 @@ export class WhatsAppController {
             // this.el.panelCamera.removeClass('open');//Fechar o painel da câmera
             this.closeAllMainPanel();
             this.el.panelMessagesContainer.show();//Mostra o painel de messagens
+            this._camera.stop();
 
         });
 
         this.el.btnTakePicture.on('click', e => {//Botão abrir câmera
 
-            console.log('Take Picture');
+            // console.log('Take Picture');
+            let dataUrl = this._camera.takePicture();
 
-        })
+            this.el.pictureCamera.src = dataUrl;
+            this.el.pictureCamera.show();
+            this.el.videoCamera.hide();
+            this.el.btnReshootPanelCamera.show();//Mostra o botão para tirar nova foto
+            this.el.containerTakePicture.hide();//Esconde o botão para tirar foto
+            this.el.containerSendPicture.show();//Mostra o botão para enviar a foto / Salvar
+
+        });
+
+        this.el.btnReshootPanelCamera.on('click', e => {
+
+            this.el.pictureCamera.hide();
+            this.el.videoCamera.show();
+            this.el.btnReshootPanelCamera.hide();//Esconde o botão para tirar nova foto
+            this.el.containerTakePicture.show();//Mostra o botão para tirar foto
+            this.el.containerSendPicture.hide();//Esconde o botão para enviar a foto / Salvar
+
+        });
+
+        this.el.btnSendPicture.on('click', e => {
+
+            console.log(this.el.pictureCamera.src);
+
+        });
 
         this.el.btnAttachDocument.on('click', e => {//Aqui abre o menu para anexar 
 
