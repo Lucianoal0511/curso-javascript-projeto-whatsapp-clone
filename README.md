@@ -35,11 +35,11 @@ Sequência
 7 - Inclui a chamada dos arquivos criados no index.html;
 8 - Deve-se prestar atenção na sequência da chamada de cada um para não dá erro;
 9 - Agora iniciaremos o prototype, dentro de WhatsAppController, para otimizar o código e diminuir a quantidade de códigos do projeto;
-10 - Iniciamos o initEvents, dentro do WhatsAppController, para iniciarmos todos os eventos dentro da aplicação
-11 - configuração do webpack
+10 - Iniciamos o initEvents, dentro do WhatsAppController, para iniciarmos todos os eventos dentro da aplicação;
+11 - configuração do webpack:
     a) primeiro abre o terminal na pasta do projeto
     b) inicia com npm init
     c) instala o webpack, nesse projeto foi instalado a versão da aula para evitar erros logo npm install webpack@3.1.0 --save
     d) instala o servidor npm install webpack-dev-server@2.5.1 --save
     e) por fim verifica no projeto se foram colocados os pacotes package-lock.json e package.json, e verifica nesse último se estão as versões instaladas da webpack
-
+12 - Para completar a configuração do webpack se faz necessário algumas modificações nos arquivos WhatsAppController, Format e CameraController, com a importação desses arquivos em cada um, com o intuito de funcionar normalmente;
